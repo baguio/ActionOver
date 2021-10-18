@@ -25,17 +25,11 @@ struct ActionOver: ViewModifier {
     /// The iPad and Mac configuration
     let ipadAndMacConfiguration: IpadAndMacConfiguration?
 
-    /// The normal action button color
-    let normalButtonColor: UIColor
-
-
 
     // MARK: - Private Properties
 
     /// The **Action Sheet Buttons** built from the Action Over Buttons
     private var sheetButtons: [ActionSheet.Button] {
-
-        UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = normalButtonColor
 
         var actionButtons: [ActionSheet.Button] = []
 
@@ -83,7 +77,6 @@ struct ActionOver: ViewModifier {
                 },
                     label: {
                         Text(button.title ?? "")
-                            .foregroundColor(Color(self.normalButtonColor))
                 })
                 actionButtons.append(button)
             case .destructive:

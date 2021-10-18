@@ -16,15 +16,13 @@ extension View {
      - parameter buttons: An array of ActionOverButton that will be rendered in the proper format according the displayed menu type.
      Default is *true*.
      - parameter ipadAndMacConfiguration: The configuration that helpd the menu to position itself on iPad and Mac.
-     - parameter normalButtonColor: The color for the buttons with a *normal* action. The default color is *UIColor.label*
      */
     public func actionOver(
         presented: Binding<Bool>,
         title: ActionOverTitle,
         message: String?,
         buttons: [ActionOverButton],
-        ipadAndMacConfiguration: IpadAndMacConfiguration? = nil,
-        normalButtonColor: UIColor = UIColor.label
+        ipadAndMacConfiguration: IpadAndMacConfiguration? = nil
     ) -> some View {
         return self.modifier(
             ActionOver(
@@ -32,8 +30,7 @@ extension View {
                 title: title,
                 message: message,
                 buttons: buttons,
-                ipadAndMacConfiguration: ipadAndMacConfiguration,
-                normalButtonColor: normalButtonColor
+                ipadAndMacConfiguration: ipadAndMacConfiguration
             )
         )
     }
