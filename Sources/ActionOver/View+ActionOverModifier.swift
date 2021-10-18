@@ -20,7 +20,7 @@ extension View {
      */
     public func actionOver(
         presented: Binding<Bool>,
-        title: String,
+        title: ActionOverTitle,
         message: String?,
         buttons: [ActionOverButton],
         ipadAndMacConfiguration: IpadAndMacConfiguration,

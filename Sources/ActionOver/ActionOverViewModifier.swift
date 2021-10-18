@@ -14,7 +14,7 @@ struct ActionOver: ViewModifier {
     @Binding var presented: Bool
 
     /// The **title** of the *Action Over*
-    let title: String
+    let title: ActionOverTitle
 
     /// The **message** of the *Action Over*
     let message: String?
@@ -113,7 +113,7 @@ struct ActionOver: ViewModifier {
                 $0
                     .actionSheet(isPresented: $presented) {
                         ActionSheet(
-                            title: Text(self.title),
+                            title: Text(self.title.value),
                             message: Text(self.message ?? ""),
                             buttons: sheetButtons)
                 }
@@ -151,10 +151,12 @@ struct ActionOver: ViewModifier {
 
     private func popContent() -> some View {
         return VStack(alignment: .center, spacing: 10) {
-            Text(self.title)
-                .font(.headline)
-                .foregroundColor(Color(UIColor.secondaryLabel))
-                .padding(.top)
+            if case .alwaysShow(let titleValue) = self.title {
+                Text(titleValue)
+                    .font(.headline)
+                    .foregroundColor(titleAndMessageColor)
+                    .padding(.top)
+            }
             if self.message != nil {
                 Text(self.message ?? "")
                     .font(.body)
@@ -175,5 +177,19 @@ struct ActionOver: ViewModifier {
         }
         .buttonStyle(PlainButtonStyle())
         .padding(10)
+    }
+}
+
+public enum ActionOverTitle {
+    case alwaysShow(String)
+    case hideIfPossible(String)
+}
+
+extension ActionOverTitle {
+    var value: String {
+        switch self {
+        case .alwaysShow(let s): return s
+        case .hideIfPossible(let s): return s
+        }
     }
 }
