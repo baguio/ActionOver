@@ -23,7 +23,7 @@ struct ActionOver: ViewModifier {
     let buttons: [ActionOverButton]
 
     /// The iPad and Mac configuration
-    let ipadAndMacConfiguration: IpadAndMacConfiguration
+    let ipadAndMacConfiguration: IpadAndMacConfiguration?
 
     /// The normal action button color
     let normalButtonColor: UIColor
@@ -108,27 +108,37 @@ struct ActionOver: ViewModifier {
     // MARK: - Body
 
     func body(content: Content) -> some View {
-        content
+        return content
+        #if os(iOS)
             .iPhone {
-                $0
+                return $0
                     .actionSheet(isPresented: $presented) {
                         ActionSheet(
                             title: Text(self.title.value),
                             message: Text(self.message ?? ""),
                             buttons: sheetButtons)
                 }
-        }
-        .iPadAndMac {
-            return ipadAndMacConfiguration.anchor != nil ?
-                $0.popover(
-                    isPresented: $presented,
-                    attachmentAnchor: PopoverAttachmentAnchor.point(ipadAndMacConfiguration.anchor ?? .topTrailing),
-                    arrowEdge: (ipadAndMacConfiguration.arrowEdge ?? .top),
-                    content: popContent
-                )
-                :
-                $0.popover(isPresented: $presented, content: popContent)
-        }
+            }
+        #endif
+            .iPadAndMac { view -> AnyView in
+                if let ipadAndMacConfiguration = ipadAndMacConfiguration {
+                    return AnyView(
+                        view.popover(
+                            isPresented: $presented,
+                            attachmentAnchor: PopoverAttachmentAnchor.point(ipadAndMacConfiguration.anchor ?? .topTrailing),
+                            arrowEdge: (ipadAndMacConfiguration.arrowEdge ?? .top),
+                            content: popContent
+                        )
+                    )
+                } else {
+                    return AnyView(
+                        view.popover(
+                            isPresented: $presented,
+                            content: popContent
+                        )
+                    )
+                }
+            }
     }
 
     // MARK: - Private Methods

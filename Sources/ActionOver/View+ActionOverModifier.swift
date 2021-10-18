@@ -23,7 +23,7 @@ extension View {
         title: ActionOverTitle,
         message: String?,
         buttons: [ActionOverButton],
-        ipadAndMacConfiguration: IpadAndMacConfiguration,
+        ipadAndMacConfiguration: IpadAndMacConfiguration? = nil,
         normalButtonColor: UIColor = UIColor.label
     ) -> some View {
         return self.modifier(
