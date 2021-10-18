@@ -96,7 +96,7 @@ struct ActionOver: ViewModifier {
                 },
                     label: {
                         Text(button.title ?? "")
-                            .foregroundColor(Color(UIColor.systemRed))
+                            .foregroundColor(destructiveButtonTitleColor)
                 })
 
                 actionButtons.append(button)
@@ -132,6 +132,22 @@ struct ActionOver: ViewModifier {
     }
 
     // MARK: - Private Methods
+    
+    private var titleAndMessageColor: Color {
+        #if os(iOS)
+        Color(UIColor.secondaryLabel)
+        #else
+        Color(NSColor.secondaryLabelColor)
+        #endif
+    }
+    
+    private var destructiveButtonTitleColor: Color {
+        #if os(iOS)
+        Color(UIColor.systemRed)
+        #else
+        Color(NSColor.systemRed)
+        #endif
+    }
 
     private func popContent() -> some View {
         return VStack(alignment: .center, spacing: 10) {
@@ -142,7 +158,7 @@ struct ActionOver: ViewModifier {
             if self.message != nil {
                 Text(self.message ?? "")
                     .font(.body)
-                    .foregroundColor(Color(UIColor.secondaryLabel))
+                    .foregroundColor(titleAndMessageColor)
                     .multilineTextAlignment(.center)
                     .lineLimit(4)
                     .frame(minHeight: 60)
