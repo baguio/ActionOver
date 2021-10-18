@@ -14,7 +14,6 @@ extension View {
      - parameter title: The title of the Action Over.
      - parameter message:The message of the action Over.
      - parameter buttons: An array of ActionOverButton that will be rendered in the proper format according the displayed menu type.
-     Default is *true*.
      - parameter ipadAndMacConfiguration: The configuration that helpd the menu to position itself on iPad and Mac.
      */
     public func actionOver(
