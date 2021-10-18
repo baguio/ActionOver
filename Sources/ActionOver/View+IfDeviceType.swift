@@ -16,6 +16,8 @@ internal enum DeviceType {
 internal var deviceType: DeviceType = {
     #if targetEnvironment(macCatalyst)
     return .mac
+    #elseif os(macOS)
+    return .mac
     #else
     if UIDevice.current.userInterfaceIdiom == .pad {
         return .ipad

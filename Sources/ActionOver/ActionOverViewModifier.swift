@@ -29,6 +29,7 @@ struct ActionOver: ViewModifier {
     // MARK: - Private Properties
 
     /// The **Action Sheet Buttons** built from the Action Over Buttons
+    #if os(iOS)
     private var sheetButtons: [ActionSheet.Button] {
 
         var actionButtons: [ActionSheet.Button] = []
@@ -56,6 +57,7 @@ struct ActionOver: ViewModifier {
         }
         return actionButtons
     }
+    #endif
 
     /// The **Popover Buttons** built from the Action Over Buttons
     private var popoverButtons: [Button<Text>] {
