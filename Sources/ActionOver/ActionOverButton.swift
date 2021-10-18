@@ -26,4 +26,6 @@ public struct ActionOverButton {
         self.type = type
         self.action = action
     }
+    
+    public static let cancel: ActionOverButton = ActionOverButton(title: nil, type: .cancel, action: nil)
 }
